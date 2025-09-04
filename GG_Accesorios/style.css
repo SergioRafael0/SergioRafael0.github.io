@@ -1,0 +1,130 @@
+/*
+  style.css
+  Estilos para GG Accesorios
+  - Tema oscuro, estilo gaming/anime
+  - Solo CSS puro (sin frameworks)
+  - Variables, responsive y animaciones suaves
+*/
+
+:root{
+  /* Colores principales */
+  --bg: #071021; /* azul muy oscuro */
+  --card: #0f1724;
+  --muted: #aeb7c3;
+  --accent: #ff2d95; /* rosa neon */
+  --accent-2: #7afcff; /* cyan neon */
+  --glass: rgba(255,255,255,0.02);
+  --radius: 12px;
+  --max-width: 1200px;
+}
+
+/* Tipografías */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Rubik', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: radial-gradient(1200px 400px at 10% 10%, rgba(34,6,34,0.25), transparent), linear-gradient(180deg, var(--bg), #02040b 120%);
+  color: #e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container{max-width:var(--max-width);margin:0 auto;padding:1.25rem}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(0,0,0,0.35), transparent);backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0}
+.logo{font-family: 'Orbitron', sans-serif;font-weight:700;font-size:1.25rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.logo span{color:var(--muted);font-weight:400;font-size:0.9rem}
+
+.main-nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
+.main-nav a{color:var(--muted);text-decoration:none;padding:0.5rem;border-radius:8px;transition:all .18s}
+.main-nav a:hover{color:var(--accent);transform:translateY(-2px);text-shadow:0 0 8px rgba(255,45,149,0.12)}
+
+.hamburger{display:none;background:none;border:0;padding:0;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);margin:4px 0;border-radius:2px;transition:all .25s}
+.hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* Hero */
+.hero{padding:2rem 0}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:center}
+.hero-text h1{font-family:'Orbitron',sans-serif;font-size:2.25rem;margin:0 0 .25rem;color:var(--accent)}
+.tag{color:var(--accent-2);margin-bottom:1rem}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#061322;padding:.65rem 1rem;border-radius:10px;border:0;text-decoration:none;cursor:pointer;font-weight:700;box-shadow:0 6px 18px rgba(40,10,60,0.25);transition:transform .12s}
+.btn-primary:hover{transform:translateY(-4px)}
+
+/* Carousel */
+.carousel{position:relative;overflow:visible;height:420px;margin:1rem 0;border-radius:12px} /* altura aumentada para mostrar correctamente las imágenes en desktop */
+.slides{position:relative;border-radius:16px;box-shadow:0 12px 40px rgba(2,6,20,0.6);overflow:hidden;height:100%;min-height:260px} /* importante: height:100% hace que las slides ocupen la altura del carrusel */
+.slide{position:absolute;inset:0;opacity:0;transform:scale(.98);transition:opacity .5s ease, transform .5s ease}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide.active{opacity:1;transform:scale(1)}
+.slide-caption{position:absolute;left:1rem;bottom:1rem;background:linear-gradient(90deg,rgba(0,0,0,0.55),rgba(0,0,0,0.25));padding:.5rem .75rem;border-radius:10px;color:var(--accent-2);font-weight:600}
+
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);border:0;padding:.4rem .6rem;border-radius:10px;color:var(--accent);cursor:pointer}
+.carousel-btn.prev{left:.5rem}
+.carousel-btn.next{right:.5rem}
+.carousel-dots{display:flex;gap:.5rem;justify-content:center;padding:.5rem;margin-top:.5rem}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+.dot.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 14px rgba(122,252,255,0.06)}
+
+/* Productos */
+.products h2{margin-top:1rem;color:var(--accent)}
+.lead{color:var(--muted)}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
+.product-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);transition:transform .15s, box-shadow .15s}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(5,10,30,0.6)}
+.product-card img{width:100%;display:block}
+.product-body{padding:0.85rem}
+.product-body h3{margin:.2rem 0 .4rem;font-size:1.05rem}
+.price{color:var(--accent);font-weight:700}
+.card-actions{display:flex;gap:.5rem;margin-top:.6rem}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:.45rem .6rem;border-radius:8px;color:var(--muted);cursor:pointer}
+.btn-outline:hover{transform:translateY(-3px)}
+
+/* About */
+.about{padding:2rem 0}
+.about-grid{display:grid;grid-template-columns:1fr 300px;gap:1rem}
+
+/* Contact form */
+.contact{padding:2rem 0}
+form{background:var(--card);padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+.form-row{margin-bottom:.75rem}
+label{display:block;margin-bottom:.35rem;color:var(--muted);font-weight:600}
+input[type=text],input[type=email],textarea{width:100%;padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+input:focus,textarea:focus{outline:none;box-shadow:0 6px 18px rgba(0,0,0,0.6);border-color:var(--accent)}
+.checkbox-row{display:flex;align-items:center}
+.checkbox input{margin-right:.5rem}
+.error{color:#ff7b9a;font-size:.85rem;min-height:1.1rem;display:block;margin-top:.35rem}
+.form-success{color:var(--accent-2);margin-top:.5rem}
+
+/* Footer */
+.site-footer{padding:1.25rem 0;margin-top:2rem;border-top:1px solid rgba(255,255,255,0.02)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--muted);text-decoration:none;margin-left:1rem}
+
+/* Responsive */
+@media (max-width:1000px){
+  .product-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-grid{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .main-nav{position:fixed;inset:64px 12px auto auto;right:12px;top:64px}
+  .main-nav ul{flex-direction:column;background:linear-gradient(180deg, rgba(2,4,10,0.95), rgba(2,4,10,0.98));padding:1rem;border-radius:12px;box-shadow:0 16px 40px rgba(2,6,20,0.7)}
+
+  .hamburger{display:flex}
+  .main-nav[hidden]{display:none}
+  .product-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .carousel-btn{display:none}
+}
+
+/* Small decorative neon animation */
+@keyframes neonPulse{0%{filter:drop-shadow(0 0 0 rgba(255,45,149,0))}50%{filter:drop-shadow(0 4px 18px rgba(255,45,149,0.22))}100%{filter:drop-shadow(0 0 0 rgba(255,45,149,0))}}
+.logo{animation:neonPulse 3.8s ease-in-out infinite}
+
+/* Focus outline for accessibility */
+:focus{outline:3px solid rgba(122,252,255,0.12);outline-offset:3px}
