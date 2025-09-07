@@ -1,66 +1,188 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const stats = {
-    productos: 120,
-    usuarios: 85,
-    ventas: 34,
-    ingresos: 540000
-  };
+  let eventos = JSON.parse(localStorage.getItem("eventos")) || []
+  let productos = JSON.parse(localStorage.getItem("productos")) || []
+  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
+  let stats = { productos: 0, usuarios: 0, ventas: 0, ingresos: 0 }
 
-  document.getElementById("productosStat").textContent = stats.productos;
-  document.getElementById("usuariosStat").textContent = stats.usuarios;
-  document.getElementById("ventasStat").textContent = stats.ventas;
-  document.getElementById("ingresosStat").textContent = `$${stats.ingresos.toLocaleString("es-CL")}`;
-
-  const tablaEventos = document.querySelector("#tablaEventos tbody");
-  const formEvento = document.getElementById("formEvento");
-  const mensajeEvento = document.getElementById("mensajeEvento");
-  const buscarEvento = document.getElementById("buscarEvento");
-
-  let eventos = [
-    { tipo: "primary", nombre: "Reunión con proveedores", fecha: "2025-09-10" },
-    { tipo: "success", nombre: "Lanzamiento nuevo juego", fecha: "2025-09-15" },
-    { tipo: "info", nombre: "Capacitación en línea", fecha: "2025-09-20" },
-    { tipo: "danger", nombre: "Inventario mensual", fecha: "2025-09-25" }
-  ];
-
-  function renderEventos(lista) {
-    tablaEventos.innerHTML = "";
-    lista.forEach(e => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td><span class="badge bg-${e.tipo}">${e.tipo.charAt(0).toUpperCase() + e.tipo.slice(1)}</span></td>
-        <td>${e.nombre}</td>
-        <td>${e.fecha}</td>
-      `;
-      tablaEventos.appendChild(row);
-    });
+  function guardarEventos() {
+    localStorage.setItem("eventos", JSON.stringify(eventos))
   }
 
-  renderEventos(eventos);
+  function guardarProductos() {
+    localStorage.setItem("productos", JSON.stringify(productos))
+    actualizarStats()
+  }
 
-  formEvento.addEventListener("submit", e => {
-    e.preventDefault();
-    const tipo = document.getElementById("tipo").value;
-    const nombre = document.getElementById("evento").value;
-    const fecha = document.getElementById("fecha").value;
+  function guardarUsuarios() {
+    localStorage.setItem("usuarios", JSON.stringify(usuarios))
+    actualizarStats()
+  }
 
-    if (nombre && fecha) {
-      eventos.push({ tipo, nombre, fecha });
-      renderEventos(eventos);
-      mensajeEvento.classList.remove("d-none");
-      setTimeout(() => mensajeEvento.classList.add("d-none"), 2000);
-      formEvento.reset();
+  function actualizarStats() {
+    stats.productos = productos.length
+    stats.usuarios = usuarios.length
+    document.getElementById("productosStat").textContent = stats.productos
+    document.getElementById("usuariosStat").textContent = stats.usuarios
+    document.getElementById("ventasStat").textContent = stats.ventas
+    document.getElementById("ingresosStat").textContent = `$${stats.ingresos.toLocaleString("es-CL")}`
+  }
+
+  function renderEventos() {
+    const tbody = document.querySelector("#tablaEventos tbody")
+    tbody.innerHTML = ""
+    eventos.forEach((e, i) => {
+      const tr = document.createElement("tr")
+      tr.innerHTML = `
+        <td><span class="badge bg-${e.tipo}">${e.label}</span></td>
+        <td>${e.nombre}</td>
+        <td>${e.fecha}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="eliminarEvento(${i})">X</button></td>
+      `
+      tbody.appendChild(tr)
+    })
+  }
+
+  function renderProductos() {
+    const tbody = document.querySelector("#tablaProductos tbody")
+    tbody.innerHTML = ""
+    productos.forEach((p, i) => {
+      const tr = document.createElement("tr")
+      tr.innerHTML = `
+        <td>${p.nombre}</td>
+        <td>$${p.precio.toLocaleString("es-CL")}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editarProducto(${i})">✎</button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${i})">X</button>
+        </td>
+      `
+      tbody.appendChild(tr)
+    })
+  }
+
+  function renderUsuarios() {
+    const tbody = document.querySelector("#tablaUsuarios tbody")
+    tbody.innerHTML = ""
+    usuarios.forEach((u, i) => {
+      const tr = document.createElement("tr")
+      tr.innerHTML = `
+        <td>${u.nombre}</td>
+        <td>${u.email}</td>
+        <td>${u.password}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editarUsuario(${i})">✎</button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarUsuario(${i})">X</button>
+        </td>
+      `
+      tbody.appendChild(tr)
+    })
+  }
+
+  document.getElementById("formEvento").addEventListener("submit", e => {
+    e.preventDefault()
+    const tipo = document.getElementById("tipo").value
+    const label = document.querySelector(`#tipo option[value="${tipo}"]`).dataset.label
+    const nombre = document.getElementById("evento").value
+    const fecha = document.getElementById("fecha").value
+    eventos.push({ tipo, label, nombre, fecha })
+    guardarEventos()
+    renderEventos()
+    e.target.reset()
+  })
+
+  document.getElementById("formProducto").addEventListener("submit", e => {
+    e.preventDefault()
+    const nombre = document.getElementById("productoNombre").value
+    const precio = parseFloat(document.getElementById("productoPrecio").value)
+    const index = document.getElementById("productoIndex").value
+    if (index === "") {
+      productos.push({ nombre, precio })
+    } else {
+      productos[index] = { nombre, precio }
+      document.getElementById("productoIndex").value = ""
     }
-  });
+    guardarProductos()
+    renderProductos()
+    e.target.reset()
+  })
 
-  buscarEvento.addEventListener("input", e => {
-    const filtro = e.target.value.toLowerCase();
-    const filtrados = eventos.filter(ev => ev.nombre.toLowerCase().includes(filtro));
-    renderEventos(filtrados);
-  });
+  document.getElementById("formUsuario").addEventListener("submit", e => {
+    e.preventDefault()
+    const nombre = document.getElementById("usuarioNombre").value
+    const email = document.getElementById("usuarioEmail").value
+    const password = document.getElementById("usuarioPassword").value
+    const index = document.getElementById("usuarioIndex").value
+    if (index === "") {
+      usuarios.push({ nombre, email, password })
+    } else {
+      usuarios[index] = { nombre, email, password }
+      document.getElementById("usuarioIndex").value = ""
+    }
+    guardarUsuarios()
+    renderUsuarios()
+    e.target.reset()
+  })
+
+  window.eliminarEvento = function (i) {
+    eventos.splice(i, 1)
+    guardarEventos()
+    renderEventos()
+  }
+
+  window.eliminarProducto = function (i) {
+    productos.splice(i, 1)
+    guardarProductos()
+    renderProductos()
+  }
+
+  window.eliminarUsuario = function (i) {
+    usuarios.splice(i, 1)
+    guardarUsuarios()
+    renderUsuarios()
+  }
+
+  window.editarProducto = function (i) {
+    const p = productos[i]
+    document.getElementById("productoNombre").value = p.nombre
+    document.getElementById("productoPrecio").value = p.precio
+    document.getElementById("productoIndex").value = i
+  }
+
+  window.editarUsuario = function (i) {
+    const u = usuarios[i]
+    document.getElementById("usuarioNombre").value = u.nombre
+    document.getElementById("usuarioEmail").value = u.email
+    document.getElementById("usuarioPassword").value = u.password
+    document.getElementById("usuarioIndex").value = i
+  }
+
+  document.getElementById("buscarEvento").addEventListener("input", e => {
+    const term = e.target.value.toLowerCase()
+    document.querySelectorAll("#tablaEventos tbody tr").forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(term) ? "" : "none"
+    })
+  })
+
+  document.getElementById("buscarProducto").addEventListener("input", e => {
+    const term = e.target.value.toLowerCase()
+    document.querySelectorAll("#tablaProductos tbody tr").forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(term) ? "" : "none"
+    })
+  })
+
+  document.getElementById("buscarUsuario").addEventListener("input", e => {
+    const term = e.target.value.toLowerCase()
+    document.querySelectorAll("#tablaUsuarios tbody tr").forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(term) ? "" : "none"
+    })
+  })
+
+  renderEventos()
+  renderProductos()
+  renderUsuarios()
+  actualizarStats()
 
   async function cargarNoticias() {
-    const apiKey = "7ff83a6ae84dcd94bbc3287b0cf977c4";
+    const apiKey = "8f29952f5bdfb2ecad809e1b61148a85";
     const url = `https://gnews.io/api/v4/search?q=gaming&lang=es&max=10&token=${apiKey}`;
     try {
       const res = await fetch(url);
@@ -87,4 +209,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   cargarNoticias();
-});
+})
