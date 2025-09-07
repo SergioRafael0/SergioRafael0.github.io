@@ -1,31 +1,22 @@
 .stat-number {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 #tablaEventos thead {
-    position: sticky;
-    top: 0;
-    z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 #tablaEventos tbody tr:hover {
-    background-color: #f8f9fa;
-    cursor: pointer;
+  background-color: #f8f9fa;
+  cursor: pointer;
 }
 
-#eventos div[style*="overflow-y"] {
-    scrollbar-width: thin;
-}
-
-nav.navbar {
-  width: 250px;
-  min-width: 250px;
-  max-width: 250px;
-  height: 100vh;
-  position: sticky;
-  top: 0;
+#eventos .table-responsive {
+  scrollbar-width: thin;
 }
 
 .flex-grow-1 {
@@ -77,11 +68,6 @@ nav.navbar {
   -webkit-box-orient: vertical;
 }
 
-.row {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
-}
-
 #statsRow .col-md-3 {
   margin-bottom: 0.8rem;
 }
@@ -97,11 +83,8 @@ nav.navbar {
 
 #eventos .card,
 #agregarEvento .card {
-  height: 340px;
-}
-
-#eventos .card > div[style*="overflow-y"] {
-  height: calc(100% - 56px);
+  height: auto;
+  max-height: 340px;
 }
 
 #agregarEvento .card-body {
@@ -122,5 +105,48 @@ nav.navbar {
 #agregarEvento button {
   padding: 0.35rem 0.75rem;
   font-size: 0.85rem;
+
+}
+.btn.btn-primary[data-bs-toggle="offcanvas"] {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-toggle-btn {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    left: auto;
+    z-index: 1051;
+}
+@media (min-width: 992px) {
+  .offcanvas-lg {
+    position: static;
+    transform: none;
+    visibility: visible !important;
+    border-right: 1px solid #ddd;
+    width: 250px;
+    flex-shrink: 0;
+  }
+  .offcanvas-backdrop {
+    display: none !important;
+  }
+  body > .d-flex {
+    display: flex;
+  }
 }
 
+@media (max-width: 991px) {
+  .offcanvas-start {
+    width: 250px;
+  }
+}
