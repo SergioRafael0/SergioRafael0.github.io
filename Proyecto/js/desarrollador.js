@@ -1,112 +1,90 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const stats = {
-        productos: 128,
-        usuarios: 54,
-        ventas: 23,
-        ingresos: 85000
-    };
+  const stats = {
+    productos: 120,
+    usuarios: 85,
+    ventas: 34,
+    ingresos: 540000
+  };
 
-    document.getElementById("productosStat").textContent = stats.productos;
-    document.getElementById("usuariosStat").textContent = stats.usuarios;
-    document.getElementById("ventasStat").textContent = stats.ventas;
-    document.getElementById("ingresosStat").textContent = `$${stats.ingresos.toLocaleString()}`;
+  document.getElementById("productosStat").textContent = stats.productos;
+  document.getElementById("usuariosStat").textContent = stats.usuarios;
+  document.getElementById("ventasStat").textContent = stats.ventas;
+  document.getElementById("ingresosStat").textContent = `$${stats.ingresos.toLocaleString("es-CL")}`;
 
-    let eventos = JSON.parse(localStorage.getItem("eventos")) || [
-        { tipo: "primary", texto: "Reunión de equipo", fecha: "2024-10-10" },
-        { tipo: "success", texto: "Lanzamiento colección verano", fecha: "2024-10-15" },
-        { tipo: "info", texto: "Capacitación en ventas", fecha: "2024-10-20" },
-        { tipo: "danger", texto: "Revisión de inventario", fecha: "2024-10-28" },
-        { tipo: "warning", texto: "Auditoría interna", fecha: "2024-11-05" }
-    ];
+  const tablaEventos = document.querySelector("#tablaEventos tbody");
+  const formEvento = document.getElementById("formEvento");
+  const mensajeEvento = document.getElementById("mensajeEvento");
+  const buscarEvento = document.getElementById("buscarEvento");
 
-    const tablaEventos = document.querySelector("#tablaEventos tbody");
+  let eventos = [
+    { tipo: "primary", nombre: "Reunión con proveedores", fecha: "2025-09-10" },
+    { tipo: "success", nombre: "Lanzamiento nuevo juego", fecha: "2025-09-15" },
+    { tipo: "info", nombre: "Capacitación en línea", fecha: "2025-09-20" },
+    { tipo: "danger", nombre: "Inventario mensual", fecha: "2025-09-25" }
+  ];
 
-    function getTipoNombre(tipo) {
-        switch (tipo) {
-            case "primary": return "Reunión";
-            case "success": return "Lanzamiento";
-            case "info": return "Capacitación";
-            case "danger": return "Inventario";
-            case "warning": return "Auditoría";
-            default: return "Evento";
-        }
-    }
-
-    function renderEventos(filtro = "") {
-        tablaEventos.innerHTML = "";
-        eventos
-            .filter(ev => ev.texto.toLowerCase().includes(filtro.toLowerCase()))
-            .forEach(ev => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td><span class="badge bg-${ev.tipo}">${getTipoNombre(ev.tipo)}</span></td>
-                    <td>${ev.texto}</td>
-                    <td>${ev.fecha}</td>
-                `;
-                tablaEventos.appendChild(tr);
-            });
-    }
-
-    renderEventos();
-
-    document.getElementById("buscarEvento").addEventListener("input", e => {
-        renderEventos(e.target.value);
+  function renderEventos(lista) {
+    tablaEventos.innerHTML = "";
+    lista.forEach(e => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><span class="badge bg-${e.tipo}">${e.tipo.charAt(0).toUpperCase() + e.tipo.slice(1)}</span></td>
+        <td>${e.nombre}</td>
+        <td>${e.fecha}</td>
+      `;
+      tablaEventos.appendChild(row);
     });
+  }
 
-    document.getElementById("formEvento").addEventListener("submit", e => {
-        e.preventDefault();
-        const tipo = document.getElementById("tipo").value;
-        const texto = document.getElementById("evento").value;
-        const fecha = document.getElementById("fecha").value;
+  renderEventos(eventos);
 
-        eventos.push({ tipo, texto, fecha });
-        localStorage.setItem("eventos", JSON.stringify(eventos));
-        renderEventos();
-        e.target.reset();
+  formEvento.addEventListener("submit", e => {
+    e.preventDefault();
+    const tipo = document.getElementById("tipo").value;
+    const nombre = document.getElementById("evento").value;
+    const fecha = document.getElementById("fecha").value;
 
-        const msg = document.getElementById("mensajeEvento");
-        msg.classList.remove("d-none");
-        setTimeout(() => msg.classList.add("d-none"), 2000);
-    });
-
-    async function cargarNoticias() {
-        const apiKey = "4b87bf9cd055545da6916f7b3eef4b56";
-        const url = `https://gnews.io/api/v4/search?q=gaming&lang=es&max=10&token=${apiKey}`;
-
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-
-            const container = document.getElementById("gamingNews");
-            container.innerHTML = "";
-
-            data.articles.forEach(article => {
-                const card = document.createElement("div");
-                card.className = "card news-card shadow-sm";
-
-                card.innerHTML = `
-                    <img src="${article.image}" alt="${article.title}">
-                    <div class="card-body">
-                        <h6 class="card-title">${article.title}</h6>
-                        <p class="card-text small text-muted">${article.source.name}</p>
-                        <a href="${article.url}" target="_blank" class="btn btn-sm btn-primary">Leer más</a>
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-        } catch (err) {
-            console.error("Error cargando noticias:", err);
-            document.getElementById("gamingNews").innerHTML =
-                "<div class='text-danger'>Error cargando noticias</div>";
-        }
+    if (nombre && fecha) {
+      eventos.push({ tipo, nombre, fecha });
+      renderEventos(eventos);
+      mensajeEvento.classList.remove("d-none");
+      setTimeout(() => mensajeEvento.classList.add("d-none"), 2000);
+      formEvento.reset();
     }
+  });
 
-    document.getElementById("refreshNews").addEventListener("click", () => {
-        const container = document.getElementById("gamingNews");
-        container.innerHTML = "<div>Actualizando noticias...</div>";
-        cargarNoticias();
-    });
+  buscarEvento.addEventListener("input", e => {
+    const filtro = e.target.value.toLowerCase();
+    const filtrados = eventos.filter(ev => ev.nombre.toLowerCase().includes(filtro));
+    renderEventos(filtrados);
+  });
 
-    cargarNoticias();
+  async function cargarNoticias() {
+    const apiKey = "7ff83a6ae84dcd94bbc3287b0cf977c4";
+    const url = `https://gnews.io/api/v4/search?q=gaming&lang=es&max=10&token=${apiKey}`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      const newsContainer = document.getElementById("gamingNews");
+      newsContainer.innerHTML = "";
+      data.articles.forEach(noticia => {
+        const card = document.createElement("div");
+        card.className = "card shadow-sm";
+        card.style.width = "250px";
+        card.style.flex = "0 0 auto";
+        card.innerHTML = `
+          <img src="${noticia.image || 'https://via.placeholder.com/250x140'}" class="card-img-top" style="height:140px; object-fit:cover;">
+          <div class="card-body p-2">
+            <h6 class="card-title" style="font-size:0.9rem; white-space:normal;">${noticia.title}</h6>
+            <a href="${noticia.url}" target="_blank" class="btn btn-primary btn-sm mt-2">Ver más</a>
+          </div>
+        `;
+        newsContainer.appendChild(card);
+      });
+    } catch (error) {
+      console.error("Error cargando noticias", error);
+    }
+  }
+
+  cargarNoticias();
 });
