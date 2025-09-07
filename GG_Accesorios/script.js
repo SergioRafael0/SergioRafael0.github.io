@@ -141,4 +141,22 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
+  // Scroll suave para Destacados
+  document.querySelector('a[href="#destacados"]').addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('destacados').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Scroll suave para Nosotros
+  document.querySelector('a[href="#nosotros"]').addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('nosotros').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Scroll suave para Contacto
+  document.querySelector('a[href="#contacto"]').addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('contacto').scrollIntoView({behavior: 'smooth'});
+  });
+
 });
