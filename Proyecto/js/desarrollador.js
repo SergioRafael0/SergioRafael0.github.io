@@ -106,21 +106,43 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   document.getElementById("formUsuario").addEventListener("submit", e => {
-    e.preventDefault()
-    const nombre = document.getElementById("usuarioNombre").value
-    const email = document.getElementById("usuarioEmail").value
-    const password = document.getElementById("usuarioPassword").value
-    const index = document.getElementById("usuarioIndex").value
-    if (index === "") {
-      usuarios.push({ nombre, email, password })
-    } else {
-      usuarios[index] = { nombre, email, password }
-      document.getElementById("usuarioIndex").value = ""
-    }
-    guardarUsuarios()
-    renderUsuarios()
-    e.target.reset()
-  })
+  e.preventDefault();
+
+  const nombre = document.getElementById("usuarioNombre");
+  const email = document.getElementById("usuarioEmail");
+  const password = document.getElementById("usuarioPassword");
+  const index = document.getElementById("usuarioIndex").value;
+
+  // limpiar errores previos
+  email.setCustomValidity("");
+  password.setCustomValidity("");
+
+  // validar correo
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    email.setCustomValidity("Por favor ingresa un correo válido.");
+    email.reportValidity();
+    return;
+  }
+
+  // validar contraseña
+  if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password.value)) {
+    password.setCustomValidity("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.");
+    password.reportValidity();
+    return;
+  }
+
+  // si pasa las validaciones
+  if (index === "") {
+    usuarios.push({ nombre: nombre.value, email: email.value, password: password.value });
+  } else {
+    usuarios[index] = { nombre: nombre.value, email: email.value, password: password.value };
+    document.getElementById("usuarioIndex").value = "";
+  }
+
+  guardarUsuarios();
+  renderUsuarios();
+  e.target.reset();
+});
 
   window.eliminarEvento = function (i) {
     eventos.splice(i, 1)

@@ -17,6 +17,7 @@
     <i class="bi bi-list" style="font-size:1.5rem;"></i>
   </button>
   <div class="d-flex">
+    <!-- Sidebar -->
     <div class="offcanvas-lg offcanvas-start bg-white shadow p-3" tabindex="-1" id="sidebar">
       <div class="offcanvas-header d-lg-none">
         <h5 class="offcanvas-title">Menú</h5>
@@ -61,7 +62,9 @@
       </div>
     </div>
 
+    <!-- Main content -->
     <div class="flex-grow-1 p-4 bg-white shadow rounded">
+      <!-- Stats -->
       <div class="row g-3" id="statsRow">
         <div class="col-md-3">
           <div class="card text-center shadow-sm">
@@ -158,6 +161,18 @@
         </div>
       </div>
 
+      <!-- Noticias -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">Gaming News</div>
+            <div class="card-body">
+              <div id="gamingNews" class="d-flex overflow-auto" style="gap: 15px; white-space: nowrap;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Productos -->
       <div class="row mt-4 g-3">
         <div id="productos" class="col-md-6">
@@ -230,7 +245,7 @@
           <div class="card shadow-sm h-100">
             <div class="card-header bg-warning text-dark">Agregar/Editar Usuario</div>
             <div class="card-body">
-              <form id="formUsuario">
+              <form id="formUsuario" novalidate>
                 <input type="hidden" id="usuarioIndex">
                 <div class="mb-2">
                   <label class="form-label">Nombre</label>
@@ -249,25 +264,13 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Noticias -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="card shadow-sm">
-            <div class="card-header bg-dark text-white">Gaming News</div>
-            <div class="card-body">
-              <div id="gamingNews" class="d-flex overflow-auto" style="gap: 15px; white-space: nowrap;">
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-
     </div>
   </div>
 
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/validaciones.js"></script>
   <script src="js/desarrollador.js"></script>
 </body>
 
