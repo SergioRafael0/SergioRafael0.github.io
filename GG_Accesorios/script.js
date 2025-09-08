@@ -17,10 +17,15 @@ document.addEventListener('DOMContentLoaded', function(){
     hamburger.addEventListener('click', function(){
       const expanded = this.getAttribute('aria-expanded') === 'true';
       this.setAttribute('aria-expanded', String(!expanded));
-      if(!expanded){
-        mainNav.style.display = 'block';
-      } else {
-        mainNav.style.display = '';
+      mainNav.setAttribute('aria-expanded', String(!expanded));
+    });
+    // Oculta el menú al hacer click fuera en móvil
+    document.addEventListener('click', function(e){
+      if(window.innerWidth <= 720){
+        if (!mainNav.contains(e.target) && !hamburger.contains(e.target)) {
+          hamburger.setAttribute('aria-expanded', 'false');
+          mainNav.setAttribute('aria-expanded', 'false');
+        }
       }
     });
   }
