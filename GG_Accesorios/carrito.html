@@ -20,6 +20,7 @@
           <li><a href="carrito.html" id="cart-link">Carrito (<span id="cart-count">0</span>)</a></li>
         </ul>
       </nav>
+      <!-- Botón hamburguesa para menú móvil -->
       <button class="hamburger" id="hamburger" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
@@ -28,12 +29,16 @@
 
   <main class="container">
     <h2>Tu Carrito</h2>
+    <!-- Mensaje si el carrito está vacío -->
     <div id="cart-empty" class="cart-empty">El carrito está vacío.</div>
+    <!-- Lista de productos en el carrito -->
     <ul id="cart-items" class="cart-list"></ul>
     <div id="cart-total" class="cart-total"></div>
+    <!-- Botón para finalizar compra -->
     <button id="checkout-btn" class="btn-primary">Finalizar compra</button>
   </main>
 
+  <!-- Footer con info legal y enlaces -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© <span id="year"></span> GG Accesorios — Hecho con pasión por gaming y anime.</p>

@@ -1,16 +1,10 @@
-/*
-  script.js
-  - Controla: menú hamburguesa, carrusel automático y manual, formulario con validación
-  - Solo JS Vanilla (sin librerías)
-*/
-
-// ===== Helper: DOM ready =====
+// Espera a que el DOM esté listo
 document.addEventListener('DOMContentLoaded', function(){
-  // Año en el footer
+  // Pone el año actual en el footer
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Hamburger menu
+  // Menú hamburguesa para móvil
   const hamburger = document.getElementById('hamburger');
   const mainNav = document.getElementById('main-nav');
   if (hamburger && mainNav) {
@@ -19,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
       this.setAttribute('aria-expanded', String(!expanded));
       mainNav.setAttribute('aria-expanded', String(!expanded));
     });
-    // Oculta el menú al hacer click fuera en móvil
+    // Cierra el menú si hago click fuera en móvil
     document.addEventListener('click', function(e){
       if(window.innerWidth <= 720){
         if (!mainNav.contains(e.target) && !hamburger.contains(e.target)) {
@@ -30,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // Carousel (solo si existe)
+  // Carrusel de productos destacados (solo si existe)
   const carousel = document.getElementById('carousel');
   if (carousel) {
     const slides = carousel.querySelectorAll('.slide');
@@ -42,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
     let autoplayInterval = 4500;
     let timer = null;
 
+    // Cambia de slide
     function goTo(index){
       slides.forEach(s => s.classList.remove('active'));
       dots.forEach(d => d.classList.remove('active'));
@@ -50,7 +45,9 @@ document.addEventListener('DOMContentLoaded', function(){
       dots.forEach((d,i)=> d.setAttribute('aria-selected', i===index ? 'true' : 'false'));
       current = index;
     }
+    // Siguiente slide
     function next(){ goTo((current+1) % slides.length); }
+    // Slide anterior
     function prev(){ goTo((current-1 + slides.length) % slides.length); }
     if (nextBtn) nextBtn.addEventListener('click', function(){ next(); resetTimer(); });
     if (prevBtn) prevBtn.addEventListener('click', function(){ prev(); resetTimer(); });
@@ -58,12 +55,15 @@ document.addEventListener('DOMContentLoaded', function(){
       const idx = Number(this.dataset.slide);
       goTo(idx); resetTimer();
     }));
+    // Autoplay del carrusel
     function startTimer(){ if(autoplay) timer = setInterval(next, autoplayInterval); }
     function stopTimer(){ if(timer) clearInterval(timer); }
     function resetTimer(){ stopTimer(); startTimer(); }
     goTo(0); startTimer();
+    // Pausa autoplay al pasar el mouse
     carousel.addEventListener('mouseenter', stopTimer);
     carousel.addEventListener('mouseleave', startTimer);
+    // Imagen de respaldo si falla la carga
     carousel.querySelectorAll('img').forEach(img => {
       img.addEventListener('error', () => {
         img.src = 'https://picsum.photos/seed/fallback/800/450';
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // Scroll suave solo si existen los enlaces
+  // Scroll suave para los enlaces internos
   const scrollLinks = [
     {selector:'a[href="#destacados"]', target:'destacados'},
     {selector:'a[href="#nosotros"]', target:'nosotros'},
@@ -88,19 +88,22 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   });
 
-  // Hover efecto en tarjetas de producto
+  // Efecto hover en las tarjetas de producto
   document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('mouseenter', () => card.classList.add('hovered'));
     card.addEventListener('mouseleave', () => card.classList.remove('hovered'));
   });
 
-  // ===== Carrito funcional =====
+  // ==== Carrito ====
+  // Obtiene el carrito del localStorage
   function getCart() {
     return JSON.parse(localStorage.getItem('gg_cart') || '[]');
   }
+  // Guarda el carrito en localStorage
   function setCart(cart) {
     localStorage.setItem('gg_cart', JSON.stringify(cart));
   }
+  // Actualiza el contador del carrito en menú y footer
   function updateCartCount() {
     const cart = getCart();
     const count = cart.reduce((acc, item) => acc + item.qty, 0);
@@ -109,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // Añadir producto al carrito (solo botones con .agregar-carrito)
+  // Botón "Agregar" suma productos al carrito
   document.querySelectorAll('.agregar-carrito').forEach(btn => {
     btn.addEventListener('click', function(e) {
       const card = btn.closest('.product-card');
@@ -136,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   updateCartCount();
 
-  // Mostrar el carrito en carrito.html
+  // Si estoy en carrito.html, muestro el carrito y manejo eliminar/finalizar
   if (window.location.pathname.includes('carrito.html')) {
     function renderCart() {
       const cart = getCart();
@@ -192,14 +195,16 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  // ===== Formulario de contacto =====
+  // ==== Formulario de contacto ====
   const form = document.getElementById('contact-form');
   const successEl = document.getElementById('form-success');
   if (form && successEl) {
+    // Muestra errores debajo de cada campo
     function showError(fieldName, message){
       const el = document.querySelector(`.error[data-for="${fieldName}"]`);
       if(el) el.textContent = message || '';
     }
+    // Valida los campos del formulario
     function validate(){
       let valid = true;
       const name = form.name.value.trim();
@@ -213,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if(!terms){ showError('terms','Debes aceptar ser contactado'); valid = false; } else showError('terms','');
       return valid;
     }
+    // Envía el formulario si todo está OK
     form.addEventListener('submit', function(e){
       e.preventDefault();
       successEl.textContent = '';
@@ -227,6 +233,7 @@ document.addEventListener('DOMContentLoaded', function(){
         successEl.textContent = '';
       }
     });
+    // Valida en tiempo real al salir de cada campo
     form.querySelectorAll('input,textarea').forEach(inp => {
       inp.addEventListener('blur', function(){ validate(); });
     });
