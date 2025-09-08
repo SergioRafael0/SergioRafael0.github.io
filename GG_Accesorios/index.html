@@ -1,44 +1,49 @@
-
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Descripción para SEO y redes sociales -->
   <meta name="description" content="GG Accesorios — Tienda de accesorios gaming: muebles, sillas, teclados, auriculares y más. Estética oscura, estilo anime/otaku.">
   <title>GG Accesorios — Tienda Gaming</title>
 
-  <!-- Fuentes (Gaming + legible). Si quieres otras fuentes, cámbialas aquí. -->
+  <!-- Fuentes personalizadas para el look gaming y moderno -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- Icono simple (puedes reemplazar por tu logo) -->
+  <!-- Icono -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23222'/%3E%3Ctext x='50' y='58' font-size='46' text-anchor='middle' fill='%23ff2d95' font-family='Orbitron,Arial' %3EGG%3C/text%3E%3C/svg%3E">
 
-  <!-- Estilos principales: archivo externo -->
+  <!-- Archivo principal de estilos -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ====== Header / Navegación ====== -->
+  <!-- Barra superior con logo y navegación principal -->
   <header class="site-header">
     <div class="container header-inner">
+      <!-- Logo de la tienda, con fuente especial -->
       <a class="logo" href="#">GG <span>Accesorios</span></a>
 
+      <!-- Menú principal con enlaces a las secciones y páginas -->
       <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
         <ul>
           <li><a href="#home">Inicio</a></li>
-          <li><a href="#productos">Productos</a></li>
+          <li><a href="productos.html">Productos</a></li>
           <li><a href="#destacados">Destacados</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#contacto">Contacto</a></li>
+          <!-- Enlace al carrito, con contador dinámico -->
+          <li><a href="carrito.html" id="cart-link">Carrito (<span id="cart-count">0</span>)</a></li>
         </ul>
       </nav>
 
+      <!-- Botón hamburguesa para menú móvil -->
       <button class="hamburger" id="hamburger" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
-  <!-- ====== Hero / Carrusel de destacados ====== -->
+  <!-- Sección principal con carrusel de productos destacados y llamada a la acción -->
   <section id="home" class="hero">
     <div class="container">
       <div class="hero-grid">
@@ -46,7 +51,7 @@
           <h1>GG Accesorios</h1>
           <p class="tag">Tu tienda de accesorios gaming</p>
 
-          <!-- Carrusel movido: queda aquí, debajo del párrafo y encima del botón -->
+          <!-- Carrusel de productos destacados, con imágenes y descripciones -->
           <div class="carousel" id="carousel" aria-label="Carrusel de productos destacados">
             <div class="slides">
               <div class="slide active" data-index="0">
@@ -62,89 +67,79 @@
                 <div class="slide-caption">Teclado mecánico RGB — Personalizable y ergonómico</div>
               </div>
             </div>
-
+            <!-- Botones para navegar el carrusel -->
             <button class="carousel-btn prev" aria-label="Anterior">❮</button>
             <button class="carousel-btn next" aria-label="Siguiente">❯</button>
-
+            <!-- Dots para navegación rápida entre slides -->
             <div class="carousel-dots" role="tablist" aria-label="Navegación de diapositivas">
               <button class="dot active" data-slide="0" aria-selected="true" role="tab" aria-controls="slide-0"></button>
               <button class="dot" data-slide="1" role="tab" aria-controls="slide-1"></button>
               <button class="dot" data-slide="2" role="tab" aria-controls="slide-2"></button>
             </div>
           </div>
-          <!-- fin carrusel -->
-
-          <a class="btn-primary" href="#productos">Ver productos</a>
+          <!-- Botón para ir a la página de productos -->
+          <a class="btn-primary" href="productos.html">Ver productos</a>
         </div>
-
+        <!-- Imagen decorativa para reforzar el branding -->
         <div class="hero-media" aria-hidden="true">
-          <!-- imagen/ilustración adicional opcional -->
-          <img src="images/SinFondo4.png" alt="" style="width:100%;border-radius:12px;object-fit:cover;">
+          <img src="images/SinFondo4.png" alt="" style="width:80%;border-radius:12px;object-fit:cover;">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====== Productos ====== -->
-  <section id="productos" class="products container">
-    <h2>Productos</h2>
+  <!-- ====== Desctacados ====== -->
+  <section id="destacados" class="products container">
+    <h2>Destacados</h2>
     <p class="lead">Explora nuestra selección: desde escritorios y sillas hasta periféricos con estilo Otaku.</p>
-
     <div class="product-grid">
-      <!-- Product card (repetir/duplicar para más) -->
       <article class="product-card">
-        <img src="https://picsum.photos/seed/p1/400/300" alt="Teclado mecánico RGB - Koneko">
+        <img src="images/teclado koneko2.jpg" alt="Teclado mecánico RGB - Koneko">
         <div class="product-body">
           <h3>Teclado Koneko</h3>
           <p class="price">$99.990</p>
           <p class="desc">Teclado mecánico con switches táctiles y keycaps temáticas.</p>
           <div class="card-actions">
-            <button class="btn-outline" aria-label="Ver producto Koneko">Ver</button>
-            <button class="btn-primary" aria-label="Agregar Koneko al carrito">Agregar</button>
+            <button class="btn-primary agregar-carrito" aria-label="Agregar Koneko al carrito">Agregar</button>
           </div>
         </div>
       </article>
-
+      <!-- Tarjeta de producto: Auriculares Urbano Red -->
       <article class="product-card">
-        <img src="https://picsum.photos/seed/p2/400/300" alt="Auriculares Neko Pro">
+        <img src="images/neko pro.webp" alt="Auriculares Urbano Red">
         <div class="product-body">
-          <h3>Auriculares Neko Pro</h3>
+          <h3>Auriculares Urbano Red</h3>
           <p class="price">$59.990</p>
           <p class="desc">Micrófono desmontable y drivers 50mm.</p>
           <div class="card-actions">
-            <button class="btn-outline">Ver</button>
-            <button class="btn-primary">Agregar</button>
+            <button class="btn-primary agregar-carrito">Agregar</button>
           </div>
         </div>
       </article>
-
+      <!-- Tarjeta de producto: Silla Sakura Edition -->
       <article class="product-card">
-        <img src="https://picsum.photos/seed/p3/400/300" alt="Silla gaming Sakura Edition">
+        <img src="images/silla sakura.webp" alt="Silla gaming Sakura Edition">
         <div class="product-body">
           <h3>Silla Sakura Edition</h3>
           <p class="price">$189.990</p>
           <p class="desc">Apoyabrazos 4D, almohadillas ergonómicas y diseño anime.</p>
           <div class="card-actions">
-            <button class="btn-outline">Ver</button>
-            <button class="btn-primary">Agregar</button>
+            <button class="btn-primary agregar-carrito">Agregar</button>
           </div>
         </div>
       </article>
-
-      <!-- otra tarjeta de ejemplo -->
+      <!-- Tarjeta de producto: Escritorio Arkham -->
       <article class="product-card">
-        <img src="https://picsum.photos/seed/p4/400/300" alt="Escritorio gaming Arkham">
+        <img src="images/escritorio ganer.png" alt="Escritorio gaming Arkham">
         <div class="product-body">
           <h3>Escritorio Arkham</h3>
           <p class="price">$299.990</p>
-          <p class="desc">Estructura metálica, superficie con acabado texturizado y tiras LED RGB.</p>
+          <p class="desc">Estructura metálica con luces RBG.</p>
           <div class="card-actions">
-            <button class="btn-outline">Ver</button>
-            <button class="btn-primary">Agregar</button>
+            <button class="btn-primary agregar-carrito">Agregar</button>
           </div>
         </div>
       </article>
-
     </div>
   </section>
 
@@ -152,7 +147,7 @@
   <section id="nosotros" class="about container">
     <h2>Nosotros</h2>
     <div class="about-grid">
-      <p>GG Accesorios nació de la pasión por los videojuegos, el diseño y la cultura Otaku. Buscamos productos que combinen comodidad y estilo.</p>
+      <p>En GG Accesorios creemos que el gaming es más que un pasatiempo: es un estilo de vida. Por eso trabajamos día a día para ofrecerte accesorios y equipos de última generación, pensados para elevar tu experiencia frente a la pantalla. Desde sillas ergonómicas hasta hardware de alto rendimiento, buscamos que cada jugador disfrute al máximo de su setup, con la confianza de estar usando productos de calidad y diseño moderno.</p>
       <ul>
         <li>Envíos a todo Chile</li>
         <li>Garantía de 1 año en componentes</li>
@@ -161,38 +156,32 @@
     </div>
   </section>
 
-  <!-- ====== Contacto (formulario con validación) ====== -->
+  <!-- Sección de contacto con formulario validado por JS -->
   <section id="contacto" class="contact container">
     <h2>Contacto</h2>
-
     <form id="contact-form" novalidate>
       <div class="form-row">
         <label for="name">Nombre</label>
         <input type="text" id="name" name="name" placeholder="Tu nombre" required minlength="2">
         <small class="error" data-for="name"></small>
       </div>
-
       <div class="form-row">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
         <small class="error" data-for="email"></small>
       </div>
-
       <div class="form-row">
         <label for="mensaje">Mensaje</label>
         <textarea id="mensaje" name="mensaje" rows="4" placeholder="¿En qué podemos ayudarte?" required minlength="8"></textarea>
         <small class="error" data-for="mensaje"></small>
       </div>
-
       <div class="form-row checkbox-row">
         <label class="checkbox"><input type="checkbox" id="terms" name="terms" required> Acepto que me contacten</label>
         <small class="error" data-for="terms"></small>
       </div>
-
       <div class="form-row">
         <button class="btn-primary" type="submit">Enviar</button>
       </div>
-
       <div id="form-success" class="form-success" role="status" aria-live="polite"></div>
     </form>
   </section>
@@ -204,6 +193,7 @@
       <nav class="footer-nav" aria-label="Enlaces de pie de página">
         <a href="#">Política de envío</a>
         <a href="#">Términos</a>
+        <a href="carrito.html" id="cart-link-footer">Carrito (<span id="cart-count-footer">0</span>)</a>
       </nav>
     </div>
   </footer>
