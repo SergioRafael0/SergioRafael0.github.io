@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Carrito — GG Accesorios</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">GG <span>Accesorios</span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html#home">Inicio</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="index.html#destacados">Destacados</a></li>
+          <li><a href="index.html#nosotros">Nosotros</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+          <li><a href="carrito.html" id="cart-link">Carrito (<span id="cart-count">0</span>)</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Tu Carrito</h2>
+    <div id="cart-empty" class="cart-empty">El carrito está vacío.</div>
+    <ul id="cart-items" class="cart-list"></ul>
+    <div id="cart-total" class="cart-total"></div>
+    <button id="checkout-btn" class="btn-primary">Finalizar compra</button>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> GG Accesorios — Hecho con pasión por gaming y anime.</p>
+      <nav class="footer-nav" aria-label="Enlaces de pie de página">
+        <a href="#">Política de envío</a>
+        <a href="#">Términos</a>
+        <a href="carrito.html" id="cart-link-footer">Carrito (<span id="cart-count-footer">0</span>)</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

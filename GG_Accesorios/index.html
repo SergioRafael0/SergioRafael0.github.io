@@ -9,7 +9,7 @@
   <!-- Fuentes (Gaming + legible). Si quieres otras fuentes, cámbialas aquí. -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- Icono simple (puedes reemplazar por tu logo) -->
+  <!-- Icono -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23222'/%3E%3Ctext x='50' y='58' font-size='46' text-anchor='middle' fill='%23ff2d95' font-family='Orbitron,Arial' %3EGG%3C/text%3E%3C/svg%3E">
 
   <!-- Estilos principales: archivo externo -->
@@ -28,6 +28,7 @@
           <li><a href="#destacados">Destacados</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#contacto">Contacto</a></li>
+          <li><a href="carrito.html" id="cart-link">Carrito (<span id="cart-count">0</span>)</a></li>
         </ul>
       </nav>
 
@@ -78,7 +79,7 @@
 
         <div class="hero-media" aria-hidden="true">
           <!-- imagen/ilustración adicional opcional -->
-          <img src="images/SinFondo4.png" alt="" style="width:100%;border-radius:12px;object-fit:cover;">
+          <img src="images/SinFondo4.png" alt="" style="width:80%;border-radius:12px;object-fit:cover;">
         </div>
       </div>
     </div>
@@ -99,7 +100,7 @@
           <p class="desc">Teclado mecánico con switches táctiles y keycaps temáticas.</p>
           <div class="card-actions">
             <button class="btn-outline" aria-label="Ver producto Koneko">Ver</button>
-            <button class="btn-primary" aria-label="Agregar Koneko al carrito">Agregar</button>
+            <button class="btn-primary agregar-carrito" aria-label="Agregar Koneko al carrito">Agregar</button>
           </div>
         </div>
       </article>
@@ -112,7 +113,7 @@
           <p class="desc">Micrófono desmontable y drivers 50mm.</p>
           <div class="card-actions">
             <button class="btn-outline">Ver</button>
-            <button class="btn-primary">Agregar</button>
+            <button class="btn-primary agregar-carrito">Agregar</button>
           </div>
         </div>
       </article>
@@ -125,7 +126,7 @@
           <p class="desc">Apoyabrazos 4D, almohadillas ergonómicas y diseño anime.</p>
           <div class="card-actions">
             <button class="btn-outline">Ver</button>
-            <button class="btn-primary">Agregar</button>
+            <button class="btn-primary agregar-carrito">Agregar</button>
           </div>
         </div>
       </article>
@@ -139,7 +140,7 @@
           <p class="desc">Estructura metálica, superficie con acabado texturizado y tiras LED RGB.</p>
           <div class="card-actions">
             <button class="btn-outline">Ver</button>
-            <button class="btn-primary">Agregar</button>
+            <button class="btn-primary agregar-carrito">Agregar</button>
           </div>
         </div>
       </article>
@@ -151,7 +152,7 @@
   <section id="nosotros" class="about container">
     <h2>Nosotros</h2>
     <div class="about-grid">
-      <p>GG Accesorios nació de la pasión por los videojuegos, el diseño y la cultura Otaku. Buscamos productos que combinen comodidad y estilo.</p>
+      <p>En GG Accesorios creemos que el gaming es más que un pasatiempo: es un estilo de vida. Por eso trabajamos día a día para ofrecerte accesorios y equipos de última generación, pensados para elevar tu experiencia frente a la pantalla. Desde sillas ergonómicas hasta hardware de alto rendimiento, buscamos que cada jugador disfrute al máximo de su setup, con la confianza de estar usando productos de calidad y diseño moderno.</p>
       <ul>
         <li>Envíos a todo Chile</li>
         <li>Garantía de 1 año en componentes</li>
@@ -203,6 +204,7 @@
       <nav class="footer-nav" aria-label="Enlaces de pie de página">
         <a href="#">Política de envío</a>
         <a href="#">Términos</a>
+        <a href="carrito.html" id="cart-link-footer">Carrito (<span id="cart-count-footer">0</span>)</a>
       </nav>
     </div>
   </footer>
