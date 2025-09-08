@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       const normalUser = { nombre: inputUsuario.value, email: inputUsuario.value };
       localStorage.setItem("usuarioActivo", JSON.stringify(normalUser));
-      window.location.href = "/web/index.html";
+      window.location.href = "index.html";
     }
   });
 });
